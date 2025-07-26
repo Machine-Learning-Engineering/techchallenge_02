@@ -1,6 +1,10 @@
 # Dependências principais do projeto
 requests>=2.31.0
 python-dotenv>=1.0.0
+beautifulsoup4>=4.12.0
+selenium>=4.15.0
+pandas>=2.1.0
+lxml>=4.9.0
 
 # Dependências para desenvolvimento e testes
 pytest>=7.4.0

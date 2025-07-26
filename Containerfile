@@ -34,7 +34,10 @@ USER 1001
 # Copiar o resto dos arquivos da aplicação
 COPY src/ ./src/
 COPY config/ ./config/
+COPY scrape_with_append.py .
 
+# Criar diretório de dados
+RUN mkdir -p data
 
 # Executar o comando padrão
-CMD ["python", "src/main.py"]
+CMD ["python", "scrape_with_append.py", "--max-pages", "20"]
