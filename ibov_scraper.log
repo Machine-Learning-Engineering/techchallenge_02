@@ -1,19 +1,57 @@
-2025-07-26 15:28:32,454 - INFO - Iniciando scraping do IBOV - máximo 10 páginas
-2025-07-26 15:28:32,455 - INFO - URL: https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br
-2025-07-26 15:28:38,265 - INFO - Tentando configurar 120 itens por página
-2025-07-26 15:28:38,310 - INFO - Opções disponíveis no seletor: ['20', '40', '60', '120']
-2025-07-26 15:28:38,364 - INFO - ✅ Configurado para 120 itens por página (por texto)
-2025-07-26 15:28:43,364 - INFO - ✅ Configurado para máximo de itens por página - coletando tudo otimizado!
-2025-07-26 15:28:43,364 - INFO - === Processando página 1 ===
-2025-07-26 15:28:46,387 - INFO - Tabela carregada com 84 linhas
-2025-07-26 15:28:46,401 - INFO - Encontradas 87 linhas na tabela
-2025-07-26 15:28:46,416 - INFO - Cabeçalho identificado na linha 0
-2025-07-26 15:28:47,681 - INFO - Página 1: 84 registros extraídos
-2025-07-26 15:28:47,681 - INFO - Página 1: 84 registros coletados
-2025-07-26 15:28:47,681 - INFO - 🎉 Grande quantidade de dados coletados - configuração otimizada funcionou!
-2025-07-26 15:28:47,681 - INFO - Verificando se existem mais páginas...
-2025-07-26 15:28:47,851 - INFO - Nenhum botão de próxima página encontrado
-2025-07-26 15:28:47,851 - INFO - Não foi possível encontrar próxima página - todos os dados podem ter sido coletados
-2025-07-26 15:28:47,852 - INFO - Scraping concluído! Total: 84 registros de 1 página(s)
-2025-07-26 15:28:47,854 - INFO - Dados salvos em: data/ibov_complete_data_20250726_152847.csv
-2025-07-26 15:28:47,854 - INFO - Total de registros únicos: 84
+2025-07-27 00:02:15,390 - INFO - Iniciando scraping do IBOV - máximo 10 páginas
+2025-07-27 00:02:15,390 - INFO - URL: https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br
+2025-07-27 00:02:21,239 - INFO - Tentando configurar 120 itens por página
+2025-07-27 00:02:21,291 - INFO - Opções disponíveis no seletor: ['20', '40', '60', '120']
+2025-07-27 00:02:21,347 - INFO - ✅ Configurado para 120 itens por página (por texto)
+2025-07-27 00:02:26,347 - INFO - ✅ Configurado para máximo de itens por página - coletando tudo otimizado!
+2025-07-27 00:02:26,347 - INFO - === Processando página 1 ===
+2025-07-27 00:02:29,370 - INFO - Tabela carregada com 84 linhas
+2025-07-27 00:02:29,388 - INFO - Encontradas 87 linhas na tabela
+2025-07-27 00:02:29,400 - INFO - Cabeçalho identificado na linha 0
+2025-07-27 00:02:30,637 - INFO - Página 1: 84 registros extraídos
+2025-07-27 00:02:30,637 - INFO - Página 1: 84 registros coletados
+2025-07-27 00:02:30,637 - INFO - 🎉 Grande quantidade de dados coletados - configuração otimizada funcionou!
+2025-07-27 00:02:30,637 - INFO - Verificando se existem mais páginas...
+2025-07-27 00:02:30,795 - INFO - Nenhum botão de próxima página encontrado
+2025-07-27 00:02:30,795 - INFO - Não foi possível encontrar próxima página - todos os dados podem ter sido coletados
+2025-07-27 00:02:30,795 - INFO - Scraping concluído! Total: 84 registros de 1 página(s)
+2025-07-27 00:02:30,798 - INFO - Dados salvos em: data/ibov_complete_data_20250727_000230.csv
+2025-07-27 00:02:30,798 - INFO - Total de registros únicos: 84
+2025-07-27 00:02:48,676 - INFO - Iniciando scraping do IBOV - máximo 10 páginas
+2025-07-27 00:02:48,677 - INFO - URL: https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br
+2025-07-27 00:02:54,590 - INFO - Tentando configurar 120 itens por página
+2025-07-27 00:02:54,637 - INFO - Opções disponíveis no seletor: ['20', '40', '60', '120']
+2025-07-27 00:02:54,693 - INFO - ✅ Configurado para 120 itens por página (por texto)
+2025-07-27 00:02:59,693 - INFO - ✅ Configurado para máximo de itens por página - coletando tudo otimizado!
+2025-07-27 00:02:59,694 - INFO - === Processando página 1 ===
+2025-07-27 00:03:02,715 - INFO - Tabela carregada com 84 linhas
+2025-07-27 00:03:02,729 - INFO - Encontradas 87 linhas na tabela
+2025-07-27 00:03:02,744 - INFO - Cabeçalho identificado na linha 0
+2025-07-27 00:03:04,149 - INFO - Página 1: 84 registros extraídos
+2025-07-27 00:03:04,149 - INFO - Página 1: 84 registros coletados
+2025-07-27 00:03:04,149 - INFO - 🎉 Grande quantidade de dados coletados - configuração otimizada funcionou!
+2025-07-27 00:03:04,149 - INFO - Verificando se existem mais páginas...
+2025-07-27 00:03:04,316 - INFO - Nenhum botão de próxima página encontrado
+2025-07-27 00:03:04,316 - INFO - Não foi possível encontrar próxima página - todos os dados podem ter sido coletados
+2025-07-27 00:03:04,316 - INFO - Scraping concluído! Total: 84 registros de 1 página(s)
+2025-07-27 00:03:04,320 - INFO - Dados salvos em: data/ibov_complete_data_20250727_000304.csv
+2025-07-27 00:03:04,320 - INFO - Total de registros únicos: 84
+2025-07-27 00:05:46,744 - INFO - Iniciando scraping do IBOV - máximo 10 páginas
+2025-07-27 00:05:46,744 - INFO - URL: https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br
+2025-07-27 00:05:52,607 - INFO - Tentando configurar 120 itens por página
+2025-07-27 00:05:52,653 - INFO - Opções disponíveis no seletor: ['20', '40', '60', '120']
+2025-07-27 00:05:52,707 - INFO - ✅ Configurado para 120 itens por página (por texto)
+2025-07-27 00:05:57,707 - INFO - ✅ Configurado para máximo de itens por página - coletando tudo otimizado!
+2025-07-27 00:05:57,707 - INFO - === Processando página 1 ===
+2025-07-27 00:06:00,735 - INFO - Tabela carregada com 84 linhas
+2025-07-27 00:06:00,751 - INFO - Encontradas 87 linhas na tabela
+2025-07-27 00:06:00,764 - INFO - Cabeçalho identificado na linha 0
+2025-07-27 00:06:02,004 - INFO - Página 1: 84 registros extraídos
+2025-07-27 00:06:02,004 - INFO - Página 1: 84 registros coletados
+2025-07-27 00:06:02,005 - INFO - 🎉 Grande quantidade de dados coletados - configuração otimizada funcionou!
+2025-07-27 00:06:02,005 - INFO - Verificando se existem mais páginas...
+2025-07-27 00:06:02,171 - INFO - Nenhum botão de próxima página encontrado
+2025-07-27 00:06:02,171 - INFO - Não foi possível encontrar próxima página - todos os dados podem ter sido coletados
+2025-07-27 00:06:02,171 - INFO - Scraping concluído! Total: 84 registros de 1 página(s)
+2025-07-27 00:06:02,174 - INFO - Dados salvos em: data/ibov_complete_data_20250727_000602.csv
+2025-07-27 00:06:02,174 - INFO - Total de registros únicos: 84

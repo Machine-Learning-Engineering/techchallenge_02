@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Scraper completo para dados do índice IBOV da B3.
-Navega por todas as páginas e salva em um único arquivo CSV.
-"""
-
 import time
 import logging
 import pandas as pd
@@ -41,7 +35,7 @@ class IBOVScraper:
             headless: Se deve executar o browser em modo headless
             timeout: Timeout para operações do Selenium
         """
-        self.url = "https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br"
+        self.url = os.getenv("IBOV_URL", "https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br")
         self.timeout = timeout
         self.headless = headless
         self.driver = None
@@ -49,6 +43,9 @@ class IBOVScraper:
         
         # Criar diretório data se não existir
         os.makedirs('data', exist_ok=True)
+        
+        # Configurar driver
+        self.driver = self._setup_driver()
     
     def _setup_driver(self) -> webdriver.Chrome:
         """Configura o driver do Chrome."""
@@ -274,7 +271,7 @@ class IBOVScraper:
                     
                     try:
                         current_page_num = int(current_page_text)
-                        next_page_num = current_page_num + 1
+                        next_page_num = current_page_num + 1;
                         
                         # Buscar link da próxima página
                         next_page_link = self.driver.find_element(By.XPATH, f"//a[text()='{next_page_num}']")
@@ -420,9 +417,6 @@ class IBOVScraper:
         current_page = 1
         
         try:
-            # Configurar driver
-            self.driver = self._setup_driver()
-            
             logger.info(f"Iniciando scraping do IBOV - máximo {max_pages} páginas")
             logger.info(f"URL: {self.url}")
             

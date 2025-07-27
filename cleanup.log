@@ -1,0 +1,10 @@
+2025-07-26 23:44:21,218 - INFO - Listando arquivos em 'data' antes da remoção:
+2025-07-26 23:44:21,218 - INFO - - ibov_complete_data_20250726_233835.csv
+2025-07-26 23:44:21,218 - INFO - - ibov_complete_data_20250726_233835.parquet
+2025-07-26 23:44:21,218 - INFO - Removendo pasta 'data' e seu conteúdo...
+2025-07-26 23:44:21,218 - INFO - ✓ Pasta 'data' removida com sucesso!
+2025-07-27 00:06:52,341 - INFO - Listando arquivos em 'data' antes da remoção:
+2025-07-27 00:06:52,341 - INFO - - ibov_complete_data_20250727_000602.csv
+2025-07-27 00:06:52,342 - INFO - - ibov_complete_data_20250727_000602.parquet
+2025-07-27 00:06:52,342 - INFO - Removendo pasta 'data' e seu conteúdo...
+2025-07-27 00:06:52,342 - INFO - ✓ Pasta 'data' removida com sucesso!

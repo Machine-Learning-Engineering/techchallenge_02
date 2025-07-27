@@ -1,43 +1,47 @@
-
-FROM registry.redhat.io/ubi10/python-312-minimal
-
-LABEL maintainer="PRODESP"
-LABEL version="1.0"
-LABEL description="API Vetorizar Dados no Elastic Search"
-LABEL name="Vetorizar Dados"
+FROM python:3.11-slim-bookworm
 
 # Definir variáveis de ambiente
 ENV HOME=/opt/app-root \
-    APP_ROOT=/opt/app-root/src \
-    PATH=/opt/app-root/src/bin:/opt/app-root/bin:$PATH
+    APP_ROOT=/opt/app-root/ \
+    PATH=/opt/app-root/bin:/opt/app-root/bin:/usr/local/bin:$PATH \
+    CHROMEDRIVER_PATH=/usr/local/bin/chromedriver \
+    CHROME_BIN=/usr/bin/chromium \
+    DISPLAY=:99
 
-# Criar diretórios necessários e ajustar permissões
-USER 0
-
-RUN mkdir -p ${APP_ROOT} && \
-    chmod -R u+x ${APP_ROOT} && \
-    chgrp -R 0 ${APP_ROOT} && \
-    chmod -R g=u ${APP_ROOT}
+# Atualizar repositórios e instalar dependências
+RUN apt-get update && \
+    apt-get install -y \
+    chromium \
+    chromium-driver \
+    wget \
+    gnupg \
+    ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p ${APP_ROOT} \
+    && chmod -R u+x ${APP_ROOT} \
+    && chgrp -R 0 ${APP_ROOT} \
+    && chmod -R g=u ${APP_ROOT}
 
 WORKDIR ${APP_ROOT}
 
-# Copiar arquivos e instalar dependências
+# Criar usuário não-root
+RUN useradd -u 1001 -g 0 -s /bin/bash -m appuser \
+    && chown -R 1001:0 /opt/app-root
+
+# Copiar requirements e instalar dependências Python
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-
-# Baixar o modelo como usuário não-root
+# Mudar para usuário não-root
 USER 1001
 
-
-# Copiar o resto dos arquivos da aplicação
+# Copiar código da aplicação
 COPY src/ ./src/
-COPY config/ ./config/
-COPY scrape_with_append.py .
 
-# Criar diretório de dados
+# Criar diretório de dados se não existir
 RUN mkdir -p data
 
-# Executar o comando padrão
-CMD ["python", "scrape_with_append.py", "--max-pages", "20"]
+# Executar aplicação
+CMD ["python", "src/main.py"]
