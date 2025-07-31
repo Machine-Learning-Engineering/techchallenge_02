@@ -25,12 +25,13 @@ Credenciais:
 ## Comando Podman (alternativa ao docker-compose)
 
 ```bash
-podman run \
-   --replace --name minio \
+docker run \
+   -d --name minio \
   -p 9000:9000 \
   -p 9001:9001 \
   -e MINIO_ROOT_USER=admin \
-  -e MINIO_ROOT_PASSWORD=admin123 \
+  -e MINIO_ROOT_PASSWORD=1qaz@WSX \
+  -e TZ=America/Sao_Paulo \
   -v minio-data:/data \
   quay.io/minio/minio server /data --console-address ":9001"
 
@@ -38,3 +39,11 @@ podman run -it --rm -v $(pwd)/data:/opt/app-root/src/data techchallenge-app bash
 
 podman build -t techchallenge-app .
 ```
+
+quay.io/parraes/techchallenge_02:v1 
+
+
+sudo docker run --name srcaper-b3 -d -e MINIO_URL=http:c2-54-80-29-12.compute-1.amazonaws.com:9000 -e MINIO_USER=admin -e MINIO_PASS=1qaz@WSX -e MINIO_BUCKET=ibov -e TZ=America/Sao_Paulo quay.io/parraes/techchallenge_02:v1
+
+
+http://ec2-54-80-29-12.compute-1.amazonaws.com:9001/login <-- Endereço s3

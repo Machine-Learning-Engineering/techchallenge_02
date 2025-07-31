@@ -7,4 +7,4 @@ pandas>=2.1.0
 lxml>=4.9.0
 pyarrow>=10.0.0
 minio
-
+schedule

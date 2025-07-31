@@ -44,4 +44,4 @@ COPY src/ ./src/
 RUN mkdir -p data
 
 # Executar aplicação
-CMD ["python", "src/main.py"]
+CMD ["python", "src/scheduler.py"]

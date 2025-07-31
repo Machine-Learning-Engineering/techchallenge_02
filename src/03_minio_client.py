@@ -12,8 +12,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler('minio_client.log')
+        logging.StreamHandler(sys.stdout)
     ]
 )
 logger = logging.getLogger(__name__)
@@ -71,10 +70,11 @@ def create_date_folder(client: Minio, bucket_name: str) -> str:
             if err.code == 'NoSuchKey':
                 # Pasta não existe, criar
                 logger.info(f"Criando pasta '{folder_name}' no bucket '{bucket_name}'")
+                from io import BytesIO
                 client.put_object(
                     bucket_name, 
                     object_name, 
-                    data=b"", 
+                    data=BytesIO(b""), 
                     length=0
                 )
                 logger.info(f"Pasta '{folder_name}' criada com sucesso")
