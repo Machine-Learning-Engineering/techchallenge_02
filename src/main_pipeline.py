@@ -4,7 +4,7 @@ Script principal para executar o pipeline completo de dados do IBOV.
 Executa em sequência:
 1. 01_ibov_scraper.py - Scraping dos dados do IBOV
 2. 02_csv_to_parquet.py - Conversão de CSV para Parquet
-3. 03_minio_client.py - Upload para MinIO
+3. 03_s3_client.py - Upload para S3
 4. 04_cleanup_data.py - Limpeza dos arquivos locais
 """
 
@@ -95,7 +95,7 @@ def main():
     scripts = [
         "src/01_ibov_scraper.py",
         "src/02_csv_to_parquet_glue.py",  # Usar versão compatível com AWS Glue
-        "src/03_minio_client.py",
+        "src/03_s3_client.py",
         "src/04_cleanup_data.py"
     ]
     
