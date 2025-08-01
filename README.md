@@ -43,7 +43,12 @@ podman build -t techchallenge-app .
 quay.io/parraes/techchallenge_02:v1 
 
 
-sudo docker run --name srcaper-b3 -d -e MINIO_URL=http:c2-54-80-29-12.compute-1.amazonaws.com:9000 -e MINIO_USER=admin -e MINIO_PASS=1qaz@WSX -e MINIO_BUCKET=ibov -e TZ=America/Sao_Paulo quay.io/parraes/techchallenge_02:v1
+sudo docker run --name scraper-b3 \
+  -d \
+  -e AWS_ACCESS_KEY_ID=AKIA6FEKPWUGBSSH3F6G \
+  -e AWS_SECRET_ACCESS_KEY=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 \
+  -e TZ=America/Sao_Paulo \
+  quay.io/parraes/techchallenge_02:v1
 
 
 http://ec2-54-80-29-12.compute-1.amazonaws.com:9001/login <-- Endereço s3
