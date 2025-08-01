@@ -7,7 +7,7 @@ Este conjunto de scripts automatiza o processo de coleta, processamento e armaze
 ### 1. `main_pipeline.py`
 Script principal que executa todo o pipeline em sequência:
 - 01_ibov_scraper.py (coleta de dados)
-- 02_csv_to_parquet.py (conversão de formato)
+- 02_csv_to_parquet_glue.py (conversão compatível com AWS Glue)
 - 03_minio_client.py (upload para MinIO)
 - 04_cleanup_data.py (limpeza de arquivos locais)
 
@@ -16,6 +16,12 @@ Agendador que executa o pipeline automaticamente de segunda a sexta-feira às 20
 
 ### 3. `run_pipeline.py`
 Script para teste manual do pipeline completo.
+
+### 4. `02_csv_to_parquet_glue.py` ⭐ **NOVO**
+Conversor otimizado para AWS Glue que resolve problemas de compatibilidade.
+
+### 5. `test_parquet_glue.py` ⭐ **NOVO**
+Script para validar compatibilidade dos arquivos Parquet com AWS Glue.
 
 ## Como Usar
 
@@ -63,9 +69,25 @@ pip install schedule minio pandas pyarrow beautifulsoup4 requests
 ## Fluxo de Execução
 
 1. **Scraping**: Coleta dados do IBOV e salva em CSV
-2. **Conversão**: Converte CSV para formato Parquet
+2. **Conversão**: Converte CSV para formato Parquet **compatível com AWS Glue**
 3. **Upload**: Envia arquivos Parquet para o MinIO
 4. **Limpeza**: Remove arquivos locais após upload
+
+## ⚠️ Problema Resolvido: AWS Glue Parquet
+
+**Erro anterior**: `Illegal Parquet type: INT64 (TIMESTAMP(NANOS,false))`
+
+**Solução**: Novo script `02_csv_to_parquet_glue.py` que:
+- ✅ Força timestamps para milissegundos (compatível com Spark)
+- ✅ Valida schema antes de salvar
+- ✅ Remove precisão de nanossegundos
+- ✅ Otimiza tipos para AWS Glue
+
+**Para corrigir arquivos existentes**:
+```bash
+python src/02_csv_to_parquet_glue.py  # Reconverter
+python src/test_parquet_glue.py       # Validar
+```
 
 ## Configuração do MinIO
 

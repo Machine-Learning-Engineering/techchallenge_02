@@ -94,7 +94,7 @@ def main():
     # Lista dos scripts para executar em ordem
     scripts = [
         "src/01_ibov_scraper.py",
-        "src/02_csv_to_parquet.py", 
+        "src/02_csv_to_parquet_glue.py",  # Usar versão compatível com AWS Glue
         "src/03_minio_client.py",
         "src/04_cleanup_data.py"
     ]
