@@ -70,6 +70,10 @@ techchallenge_02/
                                         └─────────────────────────────────────┘
 ```                                    
 
+## Representacão Visual do Pipeline
+![Arquitetura Pipeline IBOVESPA](fig/arquitetura_ibovespa.png)
+
+
 ### 1. **Coleta de Dados** (`01_web_scraper.py`)
 - Acessa o site da B3 (Brasil, Bolsa, Balcão)
 - Extrai dados da carteira teórica do IBOVESPA
@@ -104,10 +108,6 @@ techchallenge_02/
   ├── refined/                 # Dados processados para análise
   └── athena-results/         # Resultados das queries Athena
   ```
-
-### Representacão Visual do Pipeline
-![Arquitetura Pipeline IBOVESPA](fig/arquitetura_ibovespa.png)
-
 
 ### 4. **Análise de Dados** (`ibov_analysis.ipynb`)
 - Conecta ao Amazon Athena
