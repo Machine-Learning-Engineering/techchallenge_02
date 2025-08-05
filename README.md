@@ -105,6 +105,10 @@ techchallenge_02/
   └── athena-results/         # Resultados das queries Athena
   ```
 
+### Representacão Visual do Pipeline
+![Arquitetura Pipeline IBOVESPA](fig/arquitetura_ibovespa.png)
+
+
 ### 4. **Análise de Dados** (`ibov_analysis.ipynb`)
 - Conecta ao Amazon Athena
 - Executa queries SQL nos dados do S3
