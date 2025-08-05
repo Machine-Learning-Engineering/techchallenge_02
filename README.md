@@ -6,6 +6,10 @@ Este projeto implementa um pipeline de dados para coleta, processamento e análi
 
 ```
 techchallenge_02/
+├── glue
+│   ├── techjob.json
+├── notebook
+│   ├── ibovespa_simple_top10.ipynb
 ├── src/
 │   ├── 01_web_scraper.py      # Coleta de dados do site B3
 │   ├── 02_data_processor.py   # Processamento e transformação dos dados
