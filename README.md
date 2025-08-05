@@ -1,54 +1,188 @@
-# techchallenge_02
+# Tech Challenge 02 - Pipeline de Dados IBOVESPA
 
-## Usando Docker Compose
+Este projeto implementa um pipeline de dados para coleta, processamento e análise de dados do IBOVESPA, utilizando AWS S3 para armazenamento e Amazon Athena para análises.
 
-Para iniciar o MinIO usando docker-compose:
+## 🏗️ Arquitetura do Projeto
 
-```bash
-docker-compose up -d
+```
+techchallenge_02/
+├── src/
+│   ├── 01_web_scraper.py      # Coleta de dados do site B3
+│   ├── 02_data_processor.py   # Processamento e transformação dos dados
+│   ├── 03_s3_client.py        # Upload para AWS S3
+│   └── ibov_analysis.ipynb    # Notebook para análise no Athena
+├── data/                      # Dados locais (temporário)
+├── docker-compose.yml         # Configuração MinIO (desenvolvimento)
+├── Dockerfile                 # Container da aplicação
+├── requirements.txt           # Dependências Python
+└── README.md                  # Documentação
 ```
 
-Ou usando podman-compose:
+## 🔄 Fluxo de Execução
 
+### 1. **Coleta de Dados** (`01_web_scraper.py`)
+- Acessa o site da B3 (Brasil, Bolsa, Balcão)
+- Extrai dados da carteira teórica do IBOVESPA
+- Salva dados brutos em formato JSON local
+- **Dados coletados:**
+  - Código da empresa
+  - Tipo de ação (ON, PN, etc.)
+  - Quantidade teórica
+  - Participação percentual
+
+### 2. **Processamento de Dados** (`02_data_processor.py`)
+- Carrega dados JSON coletados
+- Limpa e normaliza os dados
+- Adiciona campos calculados (dias desde coleta, totais)
+- Converte para formato Parquet otimizado
+- **Transformações aplicadas:**
+  - Padronização de nomes de colunas
+  - Conversão de tipos de dados
+  - Cálculo de métricas agregadas
+  - Validação de dados
+
+### 3. **Upload para S3** (`03_s3_client.py`)
+- Conecta ao AWS S3 usando boto3
+- Cria estrutura de pastas hierárquica
+- Faz upload dos arquivos Parquet processados
+- **Estrutura no S3:**
+  ```
+  s3://ibovtech/
+  ├── raw/
+  │   └── AAAAMMDD/           # Data da coleta
+  │       └── ibovespa.parquet # Apenas 1 arquivo por data
+  ├── refined/                 # Dados processados para análise
+  └── athena-results/         # Resultados das queries Athena
+  ```
+
+### 4. **Análise de Dados** (`ibov_analysis.ipynb`)
+- Conecta ao Amazon Athena
+- Executa queries SQL nos dados do S3
+- Gera visualizações e relatórios
+- **Análises disponíveis:**
+  - Top 10 ações por quantidade teórica
+  - Distribuição por tipo de ação
+  - Evolução temporal das posições
+
+## 🚀 Como Executar
+
+### Configuração de Ambiente
+
+1. **Clone o repositório:**
 ```bash
-podman-compose up -d
+git clone <repository-url>
+cd techchallenge_02
 ```
 
-O MinIO estará disponível em:
-- API: http://localhost:9000
-- Console: http://localhost:9001
-
-Credenciais:
-- User: admin
-- Password: admin123
-
-## Comando Podman (alternativa ao docker-compose)
-
+2. **Configure as variáveis de ambiente:**
 ```bash
-docker run \
-   -d --name minio \
-  -p 9000:9000 \
-  -p 9001:9001 \
-  -e MINIO_ROOT_USER=admin \
-  -e MINIO_ROOT_PASSWORD=1qaz@WSX \
-  -e TZ=America/Sao_Paulo \
-  -v minio-data:/data \
-  quay.io/minio/minio server /data --console-address ":9001"
+export AWS_ACCESS_KEY_ID="sua-access-key"
+export AWS_SECRET_ACCESS_KEY="sua-secret-key"
+export AWS_DEFAULT_REGION="us-east-1"
+export AWS_BUCKET_NAME="ibovtech"
+export TZ="America/Sao_Paulo"
+```
 
-podman run -it --rm -v $(pwd)/data:/opt/app-root/src/data techchallenge-app bash
+### Execução Local
 
+1. **Instale as dependências:**
+```bash
+pip install -r requirements.txt
+```
+
+2. **Execute o pipeline completo:**
+```bash
+# Passo 1: Coleta de dados
+python src/01_web_scraper.py
+
+# Passo 2: Processamento
+python src/02_data_processor.py
+
+# Passo 3: Upload para S3
+python src/03_s3_client.py
+
+# Passo 4: Análise (Jupyter Notebook)
+jupyter notebook src/ibov_analysis.ipynb
+```
+
+### Execução com Docker/Podman
+
+1. **Build da imagem:**
+```bash
 podman build -t techchallenge-app .
 ```
 
-quay.io/parraes/techchallenge_02:v1 
-
-
-sudo docker run --name scraper-b3 \
+2. **Execução do container:**
+```bash
+podman run --name scraper-b3 \
   -d \
-  -e AWS_ACCESS_KEY_ID=AKIA6FEKPWUGBSSH3F6G \
-  -e AWS_SECRET_ACCESS_KEY=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 \
+  -e AWS_ACCESS_KEY_ID= \
+  -e AWS_SECRET_ACCESS_KEY= \
   -e TZ=America/Sao_Paulo \
-  quay.io/parraes/techchallenge_02:v1
+  quay.io/parraes/techchallenge_02:v2
+```
 
 
-http://ec2-54-80-29-12.compute-1.amazonaws.com:9001/login <-- Endereço s3
+## 📊 Estrutura de Dados
+
+### Schema da Tabela IBOVESPA
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| `dias_desde_coleta` | int | Dias desde a última coleta |
+| `empresa` | string | Código da empresa |
+| `tipo` | string | Tipo de ação (ON, PN, etc.) |
+| `quantidade_teorica` | bigint | Quantidade teórica da ação |
+| `qtd_teorica_total` | bigint | Quantidade teórica total |
+
+### Localização dos Dados no S3
+
+- **Dados brutos:** `s3://ibovtech/raw/YYYYMMDD/`
+- **Dados refinados:** `s3://ibovtech/refined/`
+- **Resultados Athena:** `s3://ibovtech/athena-results/`
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Python 3.9+** - Linguagem principal
+- **AWS S3** - Armazenamento de dados
+- **Amazon Athena** - Engine de consultas SQL
+- **Boto3** - SDK AWS para Python
+- **Pandas** - Manipulação de dados
+- **PyArrow** - Processamento Parquet
+- **BeautifulSoup4** - Web scraping
+- **Matplotlib/Seaborn** - Visualizações
+- **Docker/Podman** - Containerização
+
+## 📈 Monitoramento e Logs
+
+O projeto inclui logging detalhado em todos os scripts:
+
+- **Nível INFO:** Operações normais e progresso
+- **Nível ERROR:** Erros e exceções
+- **Nível DEBUG:** Informações detalhadas de debug
+
+Logs são enviados para stdout e podem ser coletados pelo sistema de logging do container.
+
+## 🔧 Configurações Avançadas
+
+### Personalização do Bucket S3
+```python
+AWS_BUCKET_NAME = os.getenv("AWS_BUCKET_NAME", "ibovtech")
+```
+
+### Configuração de Região
+```python
+AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
+```
+
+### Estrutura de Pastas Customizada
+O script `03_s3_client.py` permite personalizar a estrutura de pastas:
+- Pasta raiz: `raw/`
+- Subpastas por data: `AAAAMMDD/`
+- Apenas 1 arquivo Parquet por data (substituição automática)
+
+
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.

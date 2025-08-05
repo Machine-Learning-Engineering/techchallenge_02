@@ -1,0 +1,283 @@
+{
+	"jobConfig": {
+		"name": "techjob",
+		"description": "",
+		"role": "arn:aws:iam::973100528908:role/glue-role",
+		"command": "glueetl",
+		"version": "5.0",
+		"runtime": null,
+		"workerType": "G.1X",
+		"numberOfWorkers": 2,
+		"maxCapacity": 2,
+		"jobRunQueuingEnabled": false,
+		"maxRetries": 0,
+		"timeout": 10,
+		"maxConcurrentRuns": 1,
+		"security": "none",
+		"scriptName": "techjob.py",
+		"scriptLocation": "s3://aws-glue-assets-973100528908-us-east-1/scripts/",
+		"language": "python-3",
+		"spark": true,
+		"sparkConfiguration": "standard",
+		"jobParameters": [],
+		"tags": [],
+		"jobMode": "VISUAL_MODE",
+		"createdOn": "2025-08-01T17:52:24.325Z",
+		"developerMode": false,
+		"connectionsList": [],
+		"temporaryDirectory": "s3://aws-glue-assets-973100528908-us-east-1/temporary/",
+		"glueHiveMetastore": true,
+		"etlAutoTuning": true,
+		"metrics": true,
+		"observabilityMetrics": true,
+		"bookmark": "job-bookmark-disable",
+		"sparkPath": "s3://aws-glue-assets-973100528908-us-east-1/sparkHistoryLogs/",
+		"flexExecution": false,
+		"minFlexWorkers": null,
+		"maintenanceWindow": null,
+		"pythonPath": "",
+		"dependentPath": "",
+		"additionalPythonModules": ""
+	},
+	"dag": {
+		"node-1754071611272": {
+			"nodeId": "node-1754071611272",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1754071569201"
+			],
+			"name": "Rename Field",
+			"generatedNodeName": "RenameField_node1754071611272",
+			"classification": "Transform",
+			"type": "RenameField",
+			"sourcePath": "codigo",
+			"targetPath": "acao",
+			"parentsValid": true,
+			"calculatedType": "",
+			"codeGenVersion": 2
+		},
+		"node-1754071459472": {
+			"nodeId": "node-1754071459472",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1754070575179"
+			],
+			"name": "SQL Query",
+			"generatedNodeName": "SQLQuery_node1754071459472",
+			"classification": "Transform",
+			"type": "SqlCode",
+			"sqlAliases": [
+				{
+					"from": "node-1754070575179",
+					"alias": "myDataSource"
+				}
+			],
+			"outputSchemas": null,
+			"parentsValid": true,
+			"calculatedType": "",
+			"sqlQuery": "select *, \nDATEDIFF(\n  current_date,\n  CAST(\n    SUBSTRING(data_coleta FROM 1 FOR 4) || '-' ||\n    SUBSTRING(data_coleta FROM 5 FOR 2) || '-' ||\n    SUBSTRING(data_coleta FROM 7 FOR 2)\n  AS DATE)\n) AS dias_desde_coleta\n\nfrom myDataSource",
+			"codeGenVersion": 2
+		},
+		"node-1754071569201": {
+			"nodeId": "node-1754071569201",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1754071459472"
+			],
+			"name": "Aggregate",
+			"generatedNodeName": "Aggregate_node1754071569201",
+			"classification": "Transform",
+			"type": "Aggregate",
+			"parentsValid": true,
+			"calculatedType": "",
+			"groups": [
+				"dias_desde_coleta",
+				"codigo",
+				"empresa",
+				"tipo",
+				"quantidade_teorica",
+				"data_coleta"
+			],
+			"aggs": [
+				{
+					"column": "quantidade_teorica",
+					"aggFunc": "sum"
+				}
+			],
+			"codeGenVersion": 2
+		},
+		"node-1754071708363": {
+			"nodeId": "node-1754071708363",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1754071648209"
+			],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1754071708363",
+			"classification": "DataSink",
+			"type": "S3",
+			"streamingBatchInterval": 100,
+			"format": "glueparquet",
+			"compression": "snappy",
+			"numberTargetPartitions": "0",
+			"path": "s3://ibovtech/refined/",
+			"partitionKeys": [
+				"data_coleta",
+				"acao"
+			],
+			"schemaChangePolicy": {
+				"enableUpdateCatalog": true,
+				"updateBehavior": "UPDATE_IN_DATABASE",
+				"database": "default",
+				"table": "ibovespa"
+			},
+			"updateCatalogOptions": "schemaAndPartitions",
+			"autoDataQuality": {
+				"isEnabled": true,
+				"evaluationContext": "EvaluateDataQuality_node1754070962718"
+			},
+			"calculatedType": "",
+			"codeGenVersion": 2
+		},
+		"node-1754070575179": {
+			"nodeId": "node-1754070575179",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1754070575179",
+			"classification": "DataSource",
+			"type": "S3",
+			"isCatalog": false,
+			"format": "parquet",
+			"paths": [
+				"s3://ibovtech/raw/"
+			],
+			"compressionType": null,
+			"exclusions": [],
+			"groupFiles": null,
+			"groupSize": null,
+			"recurse": true,
+			"maxBand": null,
+			"maxFilesInBand": null,
+			"additionalOptions": {
+				"boundedSize": null,
+				"boundedFiles": null,
+				"enableSamplePath": false,
+				"samplePath": "s3://ibovtech/raw/20250801/ibov_complete_data_20250801_200046.parquet",
+				"boundedOption": null
+			},
+			"outputSchemas": [
+				[
+					{
+						"key": "dias_desde_coleta",
+						"fullPath": [
+							"dias_desde_coleta"
+						],
+						"type": "int",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "codigo",
+						"fullPath": [
+							"codigo"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "empresa",
+						"fullPath": [
+							"empresa"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "tipo",
+						"fullPath": [
+							"tipo"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "quantidade_teorica",
+						"fullPath": [
+							"quantidade_teorica"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "participacao_pct",
+						"fullPath": [
+							"participacao_pct"
+						],
+						"type": "double",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "pagina",
+						"fullPath": [
+							"pagina"
+						],
+						"type": "bigint",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "data_coleta",
+						"fullPath": [
+							"data_coleta"
+						],
+						"type": "date",
+						"glueStudioType": null,
+						"children": null
+					},
+					{
+						"key": "url_fonte",
+						"fullPath": [
+							"url_fonte"
+						],
+						"type": "string",
+						"glueStudioType": null,
+						"children": null
+					}
+				]
+			],
+			"calculatedType": "",
+			"codeGenVersion": 2,
+			"inferSchemaChanged": true
+		},
+		"node-1754071648209": {
+			"nodeId": "node-1754071648209",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1754071611272"
+			],
+			"name": "Rename Field",
+			"generatedNodeName": "RenameField_node1754071648209",
+			"classification": "Transform",
+			"type": "RenameField",
+			"sourcePath": "sum(quantidade_teorica)",
+			"targetPath": "qtd_teorica_total",
+			"parentsValid": true,
+			"calculatedType": "",
+			"codeGenVersion": 2
+		}
+	},
+	"hasBeenSaved": false,
+	"usageProfileName": null
+}
