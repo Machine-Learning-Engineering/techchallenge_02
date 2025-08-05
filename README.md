@@ -12,8 +12,7 @@ techchallenge_02/
 │   ├── 03_s3_client.py        # Upload para AWS S3
 │   └── ibov_analysis.ipynb    # Notebook para análise no Athena
 ├── data/                      # Dados locais (temporário)
-├── docker-compose.yml         # Configuração MinIO (desenvolvimento)
-├── Dockerfile                 # Container da aplicação
+├── Containerfile                # Container da aplicação
 ├── requirements.txt           # Dependências Python
 └── README.md                  # Documentação
 ```
