@@ -18,9 +18,8 @@ techchallenge_02/
 └── README.md                  # Documentação
 ```
 
-### Diagrama de Fluxo
-
-```
+## 🔄 Fluxo de Execução
+'''
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                          PIPELINE IBOVESPA - AWS                           │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -69,29 +68,7 @@ techchallenge_02/
                                         │ - quantidade_teorica (bigint)       │
                                         │ - qtd_teorica_total (bigint)        │
                                         └─────────────────────────────────────┘
-```
-
-
-### Representação Visual
-
-![Arquitetura do Pipeline IBOVESPA](fig/arquitetura_ibovespa.png)
-
-*Figura 1: Arquitetura completa do pipeline de dados IBOVESPA mostrando o fluxo desde a coleta até a análise final no Amazon Athena.*
-
-#### Fluxo de Dados:
-1. **Coleta** → Extração de dados do site B3
-2. **Processamento** → Limpeza e normalização dos dados
-3. **Upload** → Armazenamento estruturado no AWS S3
-4. **Análise** → Consultas SQL via Amazon Athena e visualizações
-
-#### Componentes Principais:
-- **Storage Local**: Armazenamento temporário durante processamento
-- **AWS S3**: Data Lake para armazenamento persistente
-- **Amazon Athena**: Engine de consultas SQL serverless
-- **Notebook**: Interface para análises e visualizações
-
-
-## 🔄 Fluxo de Execução
+'''                                        
 
 ### 1. **Coleta de Dados** (`01_web_scraper.py`)
 - Acessa o site da B3 (Brasil, Bolsa, Balcão)
@@ -254,7 +231,28 @@ O script `03_s3_client.py` permite personalizar a estrutura de pastas:
 - Subpastas por data: `AAAAMMDD/`
 - Apenas 1 arquivo Parquet por data (substituição automática)
 
+## 🔐 Segurança
 
+- Credenciais AWS são carregadas via variáveis de ambiente
+- Não há credenciais hardcoded no código
+- Uso de IAM roles recomendado para produção
+- Validação de permissões S3 antes de operações
+
+## 📝 Próximos Passos
+
+- [ ] Implementar agendamento automático (AWS Lambda/EventBridge)
+- [ ] Adicionar mais validações de dados
+- [ ] Implementar notificações de erro
+- [ ] Adicionar métricas de performance
+- [ ] Criar dashboard em tempo real
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
 
 ## 📄 Licença
 
