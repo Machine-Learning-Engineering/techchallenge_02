@@ -27,8 +27,8 @@ techchallenge_02/
 ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
 │   COLETA     │    │ PROCESSAMENTO│    │   UPLOAD     │    │   ANÁLISE    │
 │              │    │              │    │              │    │              │
-│ 01_web_      │───▶│ 02_data_     │───▶│ 03_s3_       │───▶│ ibov_        │
-│ scraper.py   │    │ processor.py │    │ client.py    │    │ analysis.ipynb│
+│ 01_web_      │──▶│ 02_data_     │──▶│ 03_s3_       │──▶│ ibov_        │
+│ scraper.py   │    │ processor.py │    │ client.py    │    │analysis.ipynb│
 │              │    │              │    │              │    │              │
 │ • Site B3    │    │ • Limpa dados│    │ • Conecta S3 │    │ • Athena SQL │
 │ • Carteira   │    │ • Normaliza  │    │ • Upload     │    │ • Gráficos   │
