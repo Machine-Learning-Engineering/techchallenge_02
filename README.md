@@ -19,6 +19,8 @@ techchallenge_02/
 ```
 
 ### Diagrama de Fluxo
+
+```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                          PIPELINE IBOVESPA - AWS                           │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -67,13 +69,12 @@ techchallenge_02/
                                         │ - quantidade_teorica (bigint)       │
                                         │ - qtd_teorica_total (bigint)        │
                                         └─────────────────────────────────────┘
+```
+
 
 ### Representação Visual
 
-// ...existing code...
-### Representação Visual
-
-![Arquitetura do Pipeline IBOVESPA](arquitetura_ibovespa.png)
+![Arquitetura do Pipeline IBOVESPA](fig/arquitetura_ibovespa.png)
 
 *Figura 1: Arquitetura completa do pipeline de dados IBOVESPA mostrando o fluxo desde a coleta até a análise final no Amazon Athena.*
 
@@ -88,7 +89,6 @@ techchallenge_02/
 - **AWS S3**: Data Lake para armazenamento persistente
 - **Amazon Athena**: Engine de consultas SQL serverless
 - **Notebook**: Interface para análises e visualizações
-
 
 
 ## 🔄 Fluxo de Execução
