@@ -245,14 +245,6 @@ O script `03_s3_client.py` permite personalizar a estrutura de pastas:
 - Uso de IAM roles recomendado para produção
 - Validação de permissões S3 antes de operações
 
-## 📝 Próximos Passos
-
-- [ ] Implementar agendamento automático (AWS Lambda/EventBridge)
-- [ ] Adicionar mais validações de dados
-- [ ] Implementar notificações de erro
-- [ ] Adicionar métricas de performance
-- [ ] Criar dashboard em tempo real
-
 ## 🤝 Contribuição
 
 1. Fork o projeto
